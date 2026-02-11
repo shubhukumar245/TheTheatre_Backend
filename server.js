@@ -11,19 +11,11 @@ dotenv.config();
 connectDB();
 
 const app = express();
-<<<<<<< HEAD
-=======
-
->>>>>>> 864ab1d6936308ebc3e6515db3422249a29a7fe5
 app.use(
   cors({
     origin: "*",
   })
-<<<<<<< HEAD
-);
-=======
-);;
->>>>>>> 864ab1d6936308ebc3e6515db3422249a29a7fe5
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
