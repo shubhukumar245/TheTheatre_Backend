@@ -11,18 +11,18 @@ const router = express.Router();
 router.get(
   "/:movieId/:city",
   async (req, res) => {
-    const {
-      movieId,
-      city,
-    } = req.params;
+    const { movieId, city } =
+      req.params;
 
     try {
       /* ----------------------------------------
-         GET ALL THEATRES
+         GET THEATRES BY CITY ONLY
       ---------------------------------------- */
 
       const theatres =
-        await Theatre.find();
+        await Theatre.find({
+          location: city,
+        });
 
       /* ----------------------------------------
          EXISTING SHOWTIMES
@@ -69,12 +69,7 @@ router.get(
               "4:30 PM",
               "7:30 PM",
             ],
-            price:
-              t.city === "Mumbai"
-                ? 350
-                : t.city === "Delhi"
-                ? 300
-                : 250,
+            price: 250, // default price
           }));
 
         await Showtime.insertMany(
@@ -91,19 +86,26 @@ router.get(
           movieId,
         }).populate("theatre");
 
-      /* FILTER BY CITY */
+      /* FILTER BY CITY SAFELY */
 
       const filtered =
         shows.filter(
           (s) =>
-            s.theatre?.city ===
+            s.theatre?.location ===
             city
         );
 
       res.json(filtered);
     } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
+      console.error(
+        "Showtime route error:",
+        err
+      );
+
+      res.status(500).json({
+        message:
+          "Error fetching showtimes",
+      });
     }
   }
 );
