@@ -1,5 +1,5 @@
 import express from "express";
-import Showtime from "../models/ShowTime.js";
+import Showtime from "../models/Showtime.js";
 import Theatre from "../models/Theatre.js";
 
 const router = express.Router();
