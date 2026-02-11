@@ -11,10 +11,21 @@ dotenv.config();
 connectDB();
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://thetheatre-frontend.onrender.com",
+  "https://the-theatre-frontend.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "https://the-theatre-frontend.vercel.app/",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS blocked"));
+      }
+    },
     credentials: true,
   })
 );
