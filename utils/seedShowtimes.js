@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import Showtime from "../models/Showtime.js";
+import Showtime from "../models/ShowTime.js";
 
 dotenv.config();
 
